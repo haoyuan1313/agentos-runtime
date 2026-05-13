@@ -1,97 +1,64 @@
-# AgentOS Runtime — Live Demo Script
+# AgentOS Runtime — Final Demo Script
 
 **Duration:** 3-4 minutes
-**Tone:** Confident, operational, infrastructure-grade. Not hype-y.
+**Tone:** Confident, operational. Infrastructure founder, not AI hype.
 
 ---
 
 ## Minute 1: The Setup (0:00-1:00)
 
-**Narrator:**
-"Every hackathon has teams building AI trading agents. But here's the question nobody asks: **who monitors the agents?** "
+"Meet the Portfolio Agent. It's an autonomous AI agent managing a $325,000 portfolio across four assets — Bitcoin, Ethereum, USDC, and Mantle. It monitors allocation targets, detects imbalances, and executes rebalance trades on Mantle testnet."
 
-[Click "Run Trading Demo"]
+[Click "Run Portfolio Demo"]
 
-"What you're looking at is AgentOS Runtime — the safety layer for autonomous trading agents."
+"Right now it's running a monitoring cycle. BTC is at 60%, ETH at 25%, USDC at 10%, MNT at 5%. Everything looks normal."
 
-[Watch as agents appear, trade, complete]
-
-"Right now, four trading agents are executing on-chain. Momentum Trader is opening positions. The On-Chain Analyst is validating market data. TX Executor is submitting transactions to Mantle testnet."
-
-[Gesture to telemetry feed scrolling]
-
-"Every action these agents take produces structured telemetry. We ingest it, normalize it, and run it through our detection engine — in real time."
-
-"This is what normal operation looks like."
+"But autonomous agents operate in a live market. Prices move. Allocations drift. And when the agent acts, nobody is watching the execution."
 
 ---
 
-## Minute 2: The First Failure (1:00-2:00)
+## Minute 2: The Imbalance & Execution (1:00-2:00)
 
-"But autonomous agents fail. And when they fail, they fail silently."
+"Watch what happens. Bitcoin pumps 12% — from $98,750 to $110,600. BTC allocation jumps to 75.8%, 15 points above target."
 
-[Scene 2: RPC timeout appears]
+"The Portfolio Agent detects the imbalance and autonomously decides: sell BTC, buy ETH and USDC to restore allocation targets. Two trades. $55,300 in BTC to USDC. $27,000 in USDC to ETH. Both submitted to Mantle testnet."
 
-"Watch what happens when the RPC endpoint goes down. TX Executor's bridge transaction times out after 30 seconds. No confirmation. No error message to the user. The agent just... waits."
+[TXs appear in Transaction Lifecycle panel]
 
-[Scene 3: Retry amplification]
-
-"Now the dangerous part. The agent retries. And retries again. This is **retry amplification** — three duplicate orders on the same market within seconds. Each one carries gas costs. Each one increases slippage."
-
-[Point to the incident cards appearing]
-
-"Our platform detects this immediately. Duplicate Order Detector fires. The evidence chain is captured."
+"This is what autonomous agents should do. But execution is where it gets dangerous."
 
 ---
 
 ## Minute 3: The Cascade (2:00-3:00)
 
-"One failure cascades."
+"The Mantle RPC goes down. Both transactions sit unconfirmed for 30 seconds. The Portfolio Agent doesn't know this — it only knows it hasn't received confirmation."
 
-[Scene 4: Exposure breach]
+"So it retries. And retries again. Three duplicate BTC sell orders. Nonces 42 through 45 consumed on the same trade. Slippage climbing from 5 to 17 basis points."
 
-"The duplicate orders push wallet exposure past $125,000 — through our $100,000 safety threshold. That's real capital at risk from a single agent failure."
+[Incident cards appear. Dashboard turns red.]
 
-[Scene 5: Orchestration desync]
+"AgentOS Runtime detects all of this. Duplicate Order Detector fires. Wallet Exposure Detector triggers at $248,000 — more than double our safety threshold. Transaction Stall Detector identifies the stuck nonces."
 
-"Now the orchestration layer breaks down. Agent A thinks the trade closed. Agent B says it failed. They disagree on the fundamental state of execution. This is how autonomous agents silently destroy capital — not through bad strategy, but through **runtime failure**."
+"Then the worst part: the Portfolio Agent thinks the rebalance completed. The TX Executor says the transactions were never confirmed. They disagree on the fundamental state of execution."
 
-[Scene 6-7: Detection climax]
+[CRITICAL incident appears — red glow, pulse animation]
 
-"Our platform detects all of this. Nine detection engines running simultaneously. Evidence-based incidents, not AI guesses. This isn't a chatbot telling you something might be wrong — this is **deterministic runtime intelligence**."
+"This is a critical incident. Risk score 92 out of 100. $248,000 at risk. And without AgentOS Runtime, nobody would know."
 
 ---
 
 ## Minute 4: Recovery & The Point (3:00-4:00)
 
-[Scene 8: Recovery]
+"Once you have visibility, recovery is straightforward. The operator identifies the RPC latency as root cause. Pauses the affected wallet. Replaces the stuck transactions with fresh nonces. Resolves the orchestration disagreement."
 
-"Once the operator has visibility, recovery is straightforward. Isolate the affected wallets. Pause the desynchronized agent. Let the healthy agents continue trading."
+"The Portfolio Agent resumes trading. Rebalance completes successfully. System stable."
 
-"Two agents resume normal operation immediately. The system is stable."
+[Pause]
 
-[Pause for effect]
+"Here's the point. Everyone is building AI agents that execute trades, make predictions, generate alpha. But nobody is asking: **what happens when they fail?** "
 
-"Here's what we built:"
+"When an autonomous agent silently retries a trade five times, who sees that? When wallet exposure doubles past the safety limit, who catches it? When two agents disagree on whether a trade happened, who resolves it?"
 
-"Not another trading bot. Not an AI agent that predicts prices."
+"We built that layer. Runtime observability. Deterministic failure detection. Evidence-based incident intelligence. For autonomous trading agents."
 
-"We built the **infrastructure that keeps autonomous trading agents safe.** "
-
-"Runtime observability. Failure detection. Operational intelligence. For the agentic economy."
-
-"That's AgentOS Runtime."
-
----
-
-## Key Visual Moments for Judges
-
-| Timestamp | What judges see | Why it matters |
-|---|---|---|
-| 0:15 | Dashboard fills with live agents | "This is real, not a mockup" |
-| 1:15 | First red incident card appears | "They detect failures automatically" |
-| 1:45 | "Financial impact: $75,000" on incident | "This protects real money" |
-| 2:15 | Wallet exposure breach — CRITICAL in red | "The danger is visible" |
-| 2:45 | Three incident cards active simultaneously | "Cascade detection" |
-| 3:15 | Recovery — green agents continue | "Not just detection — operational recovery" |
-| 3:30 | Final dashboard state | "Production-grade, not a prototype" |
+"AgentOS Runtime. The safety layer for the agentic economy."

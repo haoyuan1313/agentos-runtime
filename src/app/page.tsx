@@ -6,6 +6,8 @@ import { OnChainMonitor } from "@/components/OnChainMonitor";
 import { DemoSimulator } from "@/components/DemoSimulator";
 import { RiskBar } from "@/components/RiskBar";
 import { WalletPanel } from "@/components/WalletPanel";
+import { PortfolioPanel } from "@/components/PortfolioPanel";
+import { TradePanel } from "@/components/TradePanel";
 
 export default function Dashboard() {
   return (
@@ -24,32 +26,34 @@ export default function Dashboard() {
         <HealthBar />
       </header>
 
-      {/* Main Content */}
       <main className="flex-1 grid grid-cols-12 gap-4 p-4 overflow-hidden min-h-0">
-        {/* Left column: Agents + Wallets + Incidents */}
+        {/* Left: Portfolio + Agents + Incidents */}
         <div className="col-span-3 flex flex-col gap-4 overflow-y-auto min-h-0">
+          <PortfolioPanel />
           <AgentPanel />
-          <WalletPanel />
           <IncidentTimeline />
         </div>
 
-        {/* Center: Telemetry Feed */}
-        <div className="col-span-6 flex flex-col min-h-0">
-          <TelemetryFeed />
+        {/* Center: Telemetry + Trade Lifecycle */}
+        <div className="col-span-6 flex flex-col gap-4 min-h-0">
+          <div className="flex-1 min-h-0">
+            <TelemetryFeed />
+          </div>
+          <TradePanel />
         </div>
 
-        {/* Right column: Risk + On-Chain + Demo */}
+        {/* Right: Risk + Wallet + On-Chain + Demo */}
         <div className="col-span-3 flex flex-col gap-4 overflow-y-auto min-h-0">
           <RiskBar />
+          <WalletPanel />
           <OnChainMonitor />
           <DemoSimulator />
         </div>
       </main>
 
-      {/* Footer */}
       <footer className="border-t border-zinc-800 bg-zinc-900 px-6 py-2 flex items-center justify-between text-xs text-zinc-600 shrink-0">
-        <span>AgentOS Runtime v0.3.0</span>
-        <span>Execution Risk · Wallet Risk · Agent Stability · Market Sync · Orchestration Health</span>
+        <span>AgentOS Runtime v1.0.0</span>
+        <span>Autonomous Portfolio Agent · Runtime Safety · Mantle Testnet</span>
         <span>Deterministic core &gt; AI magic</span>
       </footer>
     </div>

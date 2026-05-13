@@ -1,6 +1,6 @@
-# AgentOS Runtime — Pitch Deck
+# AgentOS Runtime — Final Pitch Deck
 
-**12 slides. Visual-first. Infrastructure credibility.**
+**12 slides. Portfolio agent + runtime safety narrative.**
 
 ---
 
@@ -9,173 +9,125 @@
 **AgentOS Runtime**
 The safety layer for autonomous trading agents.
 
-*Dark control-room screenshot as background*
-
 ---
 
-## Slide 2: The Problem
+## Slide 2: The Autonomous Agent Problem
 
-**Autonomous AI agents are going to manage billions in on-chain capital.**
+An autonomous portfolio agent manages $325,000 across BTC, ETH, USDC, MNT.
 
-But they have no safety layer.
+It monitors allocation. Detects imbalance. Executes rebalance trades autonomously.
 
-When an AI trading agent fails:
-- It doesn't send an alert
-- It doesn't stop trading
-- It doesn't explain what went wrong
-
-**It just silently destroys capital.**
+**Question: What happens when the execution fails?**
 
 ---
 
 ## Slide 3: The Blind Spot
 
-Everyone is building AI agents that **execute trades**.
+When an autonomous trading agent encounters a runtime failure:
 
-Nobody is building the layer that **keeps them safe**.
+- It retries. Silently.
+- It duplicates orders. Invisibly.
+- It overexposes the wallet. Without warning.
+- It disagrees with other agents. Unresolved.
 
-| What teams build | What we built |
-|---|---|
-| Trading strategies | Runtime observability |
-| Prediction models | Failure detection |
-| Execution logic | Incident intelligence |
-| Agent prompts | Operational safety |
-
-**You can't operate what you can't observe.**
+**Nobody is watching the execution.**
 
 ---
 
-## Slide 4: AgentOS Runtime
-
-**Operational intelligence for autonomous on-chain AI agents.**
-
-- Real-time telemetry ingestion from any agent
-- Deterministic detection engines — no AI guessing
-- Evidence-based incidents with full traceability
-- Trading-native risk scoring across 5 categories
-- Operator-grade dashboard with live visibility
-
-*Dashboard screenshot showing healthy state*
-
----
-
-## Slide 5: Detection Engine
-
-**9 detection engines. Zero AI hallucination.**
-
-| Detector | What it catches |
-|---|---|
-| Duplicate Order | Retry-amplified duplicate trades |
-| Wallet Exposure | Exposure > safety threshold |
-| Transaction Stall | Stuck on-chain transactions |
-| Orchestration Desync | Agents disagreeing on state |
-| Hung Execution | Agents stuck in RUNNING |
-| Retry Loop | Deterministic failures being retried |
-| Stale Execution | Trades on outdated market data |
-| Tool Failure | Excessive tool failure rate |
-| Orchestration Collapse | Multiple simultaneous agent failures |
-
-**Deterministic logic. Mathematical signal matching. Evidence-based.**
-
----
-
-## Slide 6: How It Works
+## Slide 4: The Cascade
 
 ```
-AI Agents → Telemetry Events → Ingest API → Detection Engines → Incidents
-                                 ↓                          ↓
-                            Event Store               Risk Scoring
-                                 ↓                          ↓
-                            SSE Stream    ←──    Operator Dashboard
+BTC pumps → Agent rebalances → RPC latency → TXs stuck
+    ↓
+Agent retries 3x → Duplicate orders → Nonces consumed
+    ↓
+Wallet exposure: $248,000 → Safety limit: $100,000
+    ↓
+Portfolio Agent: "complete" → TX Executor: "not confirmed"
+    ↓
+ORCHESTRATION DESYNC
 ```
 
-1. Agents emit structured telemetry at every boundary
-2. Events validated, normalized, stored
-3. Detection engines process in real-time
-4. Incidents generated with full evidence chain
-5. Risk scores computed from measurable signals
-6. Dashboard shows live operational state via SSE
+**This happens in under 60 seconds.**
 
 ---
 
-## Slide 7: Live Demo
+## Slide 5: AgentOS Runtime
 
-**8-scene trading safety drama**
+An operational intelligence platform that monitors autonomous trading agents in real time.
 
-1. Healthy agents trading on Mantle testnet
-2. RPC timeout → transaction stuck
-3. Retry amplification → duplicate orders
-4. Wallet exposure breaches $100k limit
-5. Orchestration desync — agents disagree
-6. All 9 detectors fire simultaneously
-7. Critical incident with full evidence chain
-8. Operator isolates failure, agents recover
+- **9 detection engines** — deterministic, evidence-based, no AI guessing
+- **5-category risk engine** — execution, wallet, stability, market sync, orchestration
+- **Real-time dashboard** — live telemetry, incidents, portfolio state, TX lifecycle
+- **Mantle testnet integration** — real on-chain transaction monitoring
 
-*Screenshot of CRITICAL incident state*
+**The control room for autonomous agents.**
 
 ---
 
-## Slide 8: Technical Architecture
+## Slide 6: Demo — Portfolio Agent in Action
+
+**10-scene trading safety drama:**
+
+1. Agent monitors $325k portfolio
+2. BTC pumps → allocation imbalance
+3. Agent executes rebalance trades
+4. RPC latency → TXs unconfirmed
+5. Retry amplification → duplicate orders
+6. Duplicate order risk detected
+7. Wallet exposure breaches $248k
+8. Orchestration disagreement
+9. **CRITICAL INCIDENT** — all detectors fire
+10. Operator isolates failure, agent recovers
+
+---
+
+## Slide 7: Detection Engine
+
+**9 deterministic detectors. Zero hallucinations.**
+
+| Detector | What it catches | Severity |
+|---|---|---|
+| Duplicate Order | Retry-amplified duplicate trades | HIGH |
+| Wallet Exposure | Exposure > $100k threshold | CRITICAL |
+| Transaction Stall | TXs unconfirmed > 15s | HIGH |
+| Orchestration Desync | Agent state disagreement | CRITICAL |
+| Retry Loop | Deterministic failures retried | HIGH |
+| Hung Execution | Agent stuck without completion | HIGH |
+| Stale Execution | Trade on outdated market data | MEDIUM |
+| Tool Failure | Excessive tool failure rate | HIGH |
+| Orchestration Collapse | Multi-agent simultaneous failure | CRITICAL |
+
+---
+
+## Slide 8: Architecture
 
 ```
-┌─────────────────────────────────────────────────┐
-│              OPERATOR DASHBOARD                  │
-│  Agents │ Wallets │ Incidents │ Risk │ Telemetry │
-├─────────────────────────────────────────────────┤
-│              API LAYER (10 routes)               │
-│  Ingest │ Stream │ Query │ Health │ Risk │ Wallet│
-├─────────────────────────────────────────────────┤
-│         DETECTION ENGINE (9 detectors)           │
-│  Duplicate Order │ Exposure │ Stall │ Desync ... │
-├─────────────────────────────────────────────────┤
-│         RISK ENGINE (5 categories)               │
-│  Execution │ Wallet │ Stability │ Market │ Orch  │
-├─────────────────────────────────────────────────┤
-│    EVENT STORE (Ring Buffer + SSE Pub/Sub)      │
-├─────────────────────────────────────────────────┤
-│  INTEGRATIONS: Mantle Testnet · Byreal Identity │
-└─────────────────────────────────────────────────┘
+Portfolio Agent → Trade Execution → Mantle Testnet TXs
+       ↓                                  ↓
+  Telemetry Events ────→ Ingest API ──→ Event Store
+       ↓                                  ↓
+  SSE Stream ←──── Detection Engines ←────┘
+       ↓                ↓
+  Dashboard      Incident Engine
+       ↓                ↓
+  Operator        Risk Scoring (5 categories)
 ```
 
 ---
 
-## Slide 9: Why This Matters
+## Slide 9: What We Built
 
-**The agentic economy needs infrastructure.**
+**41 files. 3,900+ lines. 3 days.**
 
-Just like:
-- Cloud needed Datadog
-- Web needed Cloudflare
-- DeFi needed security audits
-
-**Autonomous AI agents need a runtime safety layer.**
-
-Someone has to build the control room.
-
----
-
-## Slide 10: Market Position
-
-**Agentic Economy Track — RealClaw Real-Life Expansion**
-
-- **Mantle**: On-chain transaction monitoring, execution verification
-- **Byreal**: Agent identity, credential verification
-- **RealClaw**: Autonomous agent deployment framework
-
-Our platform provides the operational intelligence layer
-that makes autonomous agents safe to deploy at scale.
-
----
-
-## Slide 11: What We Built
-
-**38 files. 3,657 lines. 3 days.**
-
-- Telemetry ingestion pipeline (Zod-validated, SSE streaming)
+- Autonomous portfolio agent with rebalancing logic
+- Telemetry pipeline (Zod-validated, SSE streaming)  
 - 9 detection engines (deterministic signal matching)
 - 5-category trading risk engine
-- Real-time operational dashboard
-- 10 API routes with structured logging (Pino)
+- Real-time operational dashboard (11 components)
+- Portfolio + Trade Lifecycle panels
+- Wallet exposure monitoring
+- 11 API routes with structured logging (Pino)
 - Mantle testnet integration (viem)
 - Byreal identity verification
 - Server-side agent simulator
@@ -185,27 +137,60 @@ that makes autonomous agents safe to deploy at scale.
 
 ---
 
-## Slide 12: Vision
+## Slide 10: Why This Matters
 
-**Every autonomous AI agent will need a safety layer.**
+The agentic economy needs infrastructure.
 
-We're building it.
+Just like:
+- Cloud computing needed Datadog
+- Web needed Cloudflare
+- DeFi needed security audits
 
-AgentOS Runtime:
-The control room for the agentic economy.
+**Autonomous AI agents need runtime safety.**
+
+This isn't a trading bot. This isn't a monitoring dashboard.
+
+**This is the layer that makes autonomous agents safe to deploy at scale.**
 
 ---
 
-## Judge Q&A Prep
+## Slide 11: Market Position
 
-**Q: Is this real or simulated?**
-A: The platform is real. Detection engines process real events. The agents in the demo are simulated, but any agent framework can POST to our ingest API. The Mantle testnet integration uses live RPC.
+**Agentic Economy Track — RealClaw Real-Life Expansion**
 
-**Q: How is this different from Datadog/Grafana?**
-A: Those are general-purpose. We're purpose-built for autonomous AI agents. Our detectors understand trading semantics — duplicate orders, wallet exposure, slippage, nonce conflicts. Our risk model speaks trading, not infrastructure.
+- **Mantle**: On-chain execution, transaction monitoring, wallet lifecycle
+- **Byreal**: Agent identity, credential verification, execution proof
+- **RealClaw**: Autonomous agent deployment framework
 
-**Q: What's next?**
-A: Persistent storage (PostgreSQL), multi-tenant operator views, Slack/PagerDuty integrations, real agent SDKs. But the core value — making autonomous agents observable — is here today.
+Our platform sits between the agent and the chain — providing the operational visibility layer that makes autonomous execution trustworthy.
 
-**Q: Why not just use AI to detect failures?**
-A: AI hallucinates. Our detection is deterministic — mathematical signal matching with defined thresholds. When we say "duplicate order detected," we can show you the two events, their timestamps, and the matching market. No black box.
+---
+
+## Slide 12: Vision
+
+Every autonomous AI agent will need:
+
+- Runtime observability
+- Failure detection
+- Incident intelligence
+- Operational safety
+
+We're building it.
+
+**AgentOS Runtime — The safety layer for the agentic economy.**
+
+---
+
+## Judge Q&A
+
+**Q: Is the portfolio agent real AI?**
+A: The agent follows deterministic rebalancing rules based on allocation drift — the same logic an AI agent would execute. Our differentiator is not the agent's intelligence. It's the runtime safety layer that monitors every execution step and catches failures before they become losses.
+
+**Q: What runs on Mantle?**
+A: All transactions are submitted as testnet TXs with real hashes. The OnChainMonitor connects to Mantle RPC for live block data. Agent transactions are tracked through the full lifecycle: submitted → pending → confirmed/failed.
+
+**Q: How is this different from a logging dashboard?**
+A: We don't just show you events. Our detection engines run deterministic signal matching against telemetry — duplicate orders, exposure thresholds, nonce conflicts, orchestration desync. We tell you *what failed and why*, not just "here are your logs."
+
+**Q: What's the competitive moat?**
+A: Every autonomous agent deployment will eventually need this. The moat is domain expertise — understanding the failure modes of autonomous trading agents specifically. Not generic monitoring. Purpose-built for the agentic economy.
