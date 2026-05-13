@@ -14,10 +14,11 @@ export default function Dashboard() {
       <header className="border-b border-zinc-800 bg-zinc-900 px-6 py-3 flex items-center justify-between shrink-0">
         <div>
           <h1 className="text-lg font-bold tracking-tight">
-            <span className="text-emerald-400">AgentOS</span> Runtime
+            <span className="text-emerald-400">AgentOS</span>{" "}
+            <span className="text-zinc-200">Runtime</span>
           </h1>
           <p className="text-xs text-zinc-500">
-            Runtime safety layer for autonomous trading agents · Mantle Testnet
+            The safety layer for autonomous trading agents
           </p>
         </div>
         <HealthBar />
